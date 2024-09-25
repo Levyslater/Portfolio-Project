@@ -1,8 +1,17 @@
 #include "../header/rendering.h"
 #include "../header/raindrops.h"
 
+/**
+ * drawScene - Function draws the scene to the screen
+ * @renderer: SDL renderer
+ * @texture: texture for the player
+ * @posX: player position on the x axis
+ * @posY: player position on the y axis
+ * @dirX: player direction on the x axis
+ * 
+ * Return: void
+ */
 Raindrop raindrops[MAX_RAINDROPS];
-
 void drawMiniMap(SDL_Renderer *renderer, double posX, double posY, double dirX, double dirY)
 {
 	for (int y = 0; y < MAP_HEIGHT; y++)
@@ -28,6 +37,12 @@ void drawMiniMap(SDL_Renderer *renderer, double posX, double posY, double dirX, 
 			(int)(posY * MINIMAP_SCALE + dirY * 5 * MINIMAP_SCALE));
 }
 
+/**
+ * drawRain - function to draw rain 
+ * @renderer: SDL pointer to render scene
+ * 
+ * Return: void
+ */
 void drawRain(SDL_Renderer *renderer)
 {
 	/*Light blue color for raindrops*/
@@ -50,6 +65,21 @@ void drawRain(SDL_Renderer *renderer)
 	}
 }
 
+
+/**
+ * performRaycasting - Function performs raycasting and draws the scene
+ * @renderer: SDL renderer
+ * @wallTextures: array of textures for the walls
+ * @skyTexture: pointer to sky texture 
+ * @posX: player position on the x axis
+ * @posY: player position on the y axis
+ * @dirX: player direction on the x axis
+ * @dirY: player direction on the y axis
+ * @planeX: camera plane on the x axis
+ * @planeY: camera plane on the y axis
+ * 
+ * Return: void
+ */
 void performRaycasting(SDL_Renderer *renderer, TextureData wallTextures[],
 		TextureData *skyTexture, double posX, double posY, double dirX,
 		double dirY, double planeX, double planeY)
@@ -177,6 +207,11 @@ void performRaycasting(SDL_Renderer *renderer, TextureData wallTextures[],
 				&srcRect, &destRect);
 	}
 }
+/**
+ * initializeRaindrops - function to make it rain
+ * 
+ * Return: void
+ */
 
 /* Initialize raindrops*/
 void initializeRaindrops(void)

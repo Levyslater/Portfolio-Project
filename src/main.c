@@ -4,13 +4,23 @@
 #include "../header/rendering.h"
 #include "../header/weapon.h"
 
+/**
+ * main - main function in the code
+ * @argc: arguments counter
+ * @argv: pointer to argument array
+ * 
+ * Return: null
+ */
+
 Mix_Chunk *shotgunSound = NULL;
-
-
 int main(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
+
+	bool showRain;
+	bool running;
+	bool showMiniMap;
 
 	/* Initialize SDL and create a window */
 	if (SDL_Init(SDL_INIT_VIDEO) < 0 || !(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
@@ -26,26 +36,30 @@ int main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 
+    /* Initialize the SDL window*/
 	SDL_Window * window = SDL_CreateWindow("SDL Raycasting", SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH,
 			SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 
 	if (!window)
+	/*Raise error if window creation was unsuccesful*/
 	{
 		fprintf(stderr, "Window creation failed: %s\n", SDL_GetError());
 		return (1);
 	}
 
+    /* Create a renderer for the window */
 	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 	if (!renderer)
+	/*Raise error if renderer creation was unsuccessful*/
 	{
 		fprintf(stderr, "Renderer creation failed: %s\n", SDL_GetError());
 		return (1);
 	}
 
 	/*Load map and initialize player position and direction*/
-	loadMap("./versions/map.txt");
+	loadMap("./resources/map.txt");
 	/* Initial player position*/
 	double posX = 22, posY = 12;
 	/* Initial player direction */
@@ -76,24 +90,24 @@ int main(int argc, char *argv[])
 	shotgunSound = Mix_LoadWAV("./resources/sound/shotgun.wav");
 
 	if (!themeMusic)
+	/*raise an error if music was not loaded*/
 	{
 		fprintf(stderr, "Failed to load theme music! SDL_mixer Error: %s\n", Mix_GetError());
 		return (EXIT_FAILURE);
 	}
 
 	if (!shotgunSound)
+	/*raise an error if sound was not loaded*/
 	{
 		fprintf(stderr, "Failed to load gunshot sound! SDL_mixer Error: %s\n", Mix_GetError());
 		return (EXIT_FAILURE);
 	}
 	/*Play theme music in a loop*/
 	Mix_PlayMusic(themeMusic, -1);
-
-	bool running = true;
-	bool showMiniMap = true;
 	/*Toggle rain effect*/
-	bool showRain = false;
-	/*bool firing = false; */
+	showRain = false;
+	running = true;
+	showMiniMap = true;
 	/*Weapon default state*/
 	WeaponState weaponState = WEAPON_AIM;
 	/*Store the time when the weapon was last fired*/
@@ -159,9 +173,11 @@ int main(int argc, char *argv[])
 	Mix_FreeMusic(themeMusic);
 	Mix_FreeChunk(shotgunSound);
 
+	/*free wall textures recursively*/
 	for (int i = 0; i < 5; i++)
 		SDL_DestroyTexture(wallTextures[i].texture);
 
+	/*free the weapon textures recursively*/
 	for (int i = 0; i < 4; i++)
 	{
 		SDL_DestroyTexture(weaponTextures[i].texture);

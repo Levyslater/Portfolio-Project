@@ -3,8 +3,13 @@
 #include "../header/map.h"
 #include "../header/constants.h"
 
+/**
+ * loadMap- funtion to loap map from a file
+ * @filename: pointer containing path to the map file
+ * 
+ * return: null
+ */
 int worldMap[MAP_WIDTH][MAP_HEIGHT];
-
 void loadMap(const char *filename)
 {
 	FILE *file = fopen(filename, "r");
