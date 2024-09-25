@@ -22,8 +22,7 @@ int main(int argc, char *argv[])
 
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
-		fprintf(stderr, "SDL_mixer could not initialize!
-				SDL_mixer Error: %s\n", Mix_GetError());
+		fprintf(stderr, "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		return (EXIT_FAILURE);
 	}
 

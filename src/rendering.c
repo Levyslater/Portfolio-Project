@@ -161,7 +161,7 @@ void performRaycasting(SDL_Renderer *renderer, TextureData wallTextures[],
 			wallX = posX + perpWallDist * rayDirX;
 		wallX -= floor((wallX));
 
-		int texX = (int)(wallX * (double)texWidth);
+		texX = (int)(wallX * (double)texWidth);
 
 		if (side == 0 && rayDirX > 0)
 			texX = texWidth - texX - 1;
@@ -174,7 +174,7 @@ void performRaycasting(SDL_Renderer *renderer, TextureData wallTextures[],
 		/*Draw the wall slice*/
 
 		SDL_RenderCopy(renderer, wallTextures[texID].texture,
-				&srcRect, &destRect)
+				&srcRect, &destRect);
 	}
 }
 

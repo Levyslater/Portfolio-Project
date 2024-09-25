@@ -7,7 +7,7 @@ void handlePlayerInput(SDL_Event *event, bool *running,
 {
 	const double moveSpeed = 0.06;
 	const double rotSpeed = 0.03;
-	const Uint7 *state;
+	const Uint8 *state;
 
 	if (event->type == SDL_QUIT)
 		*running = false;
